@@ -30,7 +30,7 @@ public class CodecovCoverageMojo extends AbstractMojo {
     private boolean createScriptDirectoryIfNotExists;
     @Parameter(name = "scriptFilename", alias = "scriptName", defaultValue = "codecov.sh")
     private String scriptFilename;
-    @Parameter(name = "projectToken", alias = "token")
+    @Parameter(name = "projectToken", alias = "token", defaultValue = "${env.CODECOV_TOKEN}")
     private String projectToken;
 
     @Override

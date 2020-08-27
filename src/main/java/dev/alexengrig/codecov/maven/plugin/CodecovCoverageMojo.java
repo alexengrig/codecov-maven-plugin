@@ -30,18 +30,16 @@ public class CodecovCoverageMojo extends AbstractMojo {
     private boolean createScriptDirectoryIfNotExists;
     @Parameter(name = "scriptFilename", alias = "scriptName", defaultValue = "codecov.sh")
     private String scriptFilename;
-//    @Parameter(name = "projectToken", alias = "token", defaultValue = "${env.CODECOV_TOKEN}")
-//    private String projectToken;
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
         getLog().info("Started.");
         requireScriptDirectoryExists();
         File file = new File(scriptDirectory, scriptFilename);
-        getLog().info(String.format("Download file from %s to '%s'.", scriptUrl, file));
+        getLog().info(String.format("Downloading file from %s to '%s'.", scriptUrl, file));
         fileDownloader.download(scriptUrl, file);
         getLog().info(String.format("Downloaded file: '%s'.", file));
-        getLog().info(String.format("Execute file '%s'.", file));
+        getLog().info(String.format("Executing file '%s'.", file));
         String command = String.format("bash %s", file);
         int exitCode = commandExecutor.execute(command);
         getLog().info(String.format("Executed file '%s' with exit code: %d.", file, exitCode));

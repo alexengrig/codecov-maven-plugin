@@ -4,4 +4,4 @@ jdk:
 install:
   - cd demo
   - mvn install:install-file -Dfile=../libs/codecov-maven-plugin-1.0-SNAPSHOT.jar -DgroupId=dev.alexengrig -DartifactId=codecov-maven-plugin -Dpackaging=maven-plugin -Dversion=1.0-SNAPSHOT
-  - mvn install codecov:coverage
+  - mvn install jacoco:report codecov:coverage

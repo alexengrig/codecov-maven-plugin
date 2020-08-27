@@ -1,28 +1,30 @@
 package dev.alexengrig.plugin.maven.codecov.service;
 
-import dev.alexengrig.plugin.maven.codecov.exception.FileExecuteException;
+import dev.alexengrig.plugin.maven.codecov.exception.CommandExecuteException;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.concurrent.Executors;
 import java.util.function.Consumer;
 
-public class FileExecutor {
+public class CommandExecutor {
     private final Consumer<? super String> outputConsumer;
 
-    public FileExecutor(Consumer<? super String> outputConsumer) {
+    public CommandExecutor(Consumer<? super String> outputConsumer) {
         this.outputConsumer = outputConsumer;
     }
 
-    public int execute(File file, String token) throws FileExecuteException {
-        String command = String.format("sh %s -t %s", file, token);
+    public int execute(String command) throws CommandExecuteException {
         try {
             Process process = Runtime.getRuntime().exec(command);
             StreamExchanger exchanger = new StreamExchanger(process.getInputStream(), outputConsumer);
             Executors.newSingleThreadExecutor().submit(exchanger);
             return process.waitFor();
-        } catch (InterruptedException | IOException e) {
+        } catch (InterruptedException | IOException ignore) {
             Thread.currentThread().interrupt();
-            throw new FileExecuteException(file, e);
+            throw new CommandExecuteException();
         }
     }
 

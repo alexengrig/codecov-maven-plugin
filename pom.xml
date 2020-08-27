@@ -112,12 +112,17 @@
             </plugins>
         </pluginManagement>
         <plugins>
+<!-- TODO: Failed to execute goal org.apache.maven.plugins:maven-plugin-plugin:3.6.0:descriptor
+(default-descriptor) on project codecov-maven-plugin:
+Error extracting plugin descriptor: 'Goal: help already exists in the plugin descriptor for prefix: codecov
+Existing implementation is: dev.alexengrig.plugin.maven.codecov.HelpMojo
+Conflicting implementation is: dev.alexengrig.codecov.maven.plugin.HelpMojo'
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-plugin-plugin</artifactId>
                 <version>3.6.0</version>
                 <configuration>
-                    <!-- <goalPrefix>maven-archetype-plugin</goalPrefix> -->
+                    &lt;!&ndash; <goalPrefix>maven-archetype-plugin</goalPrefix> &ndash;&gt;
                     <skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
                 </configuration>
                 <executions>
@@ -135,6 +140,7 @@
                     </execution>
                 </executions>
             </plugin>
+-->
         </plugins>
     </build>
 

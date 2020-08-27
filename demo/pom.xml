@@ -41,6 +41,15 @@
                 <groupId>dev.alexengrig</groupId>
                 <artifactId>codecov-maven-plugin</artifactId>
                 <version>1.0-SNAPSHOT</version>
+                <executions>
+                    <execution>
+                        <id>coverage</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>coverage</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

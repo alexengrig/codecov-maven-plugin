@@ -1,6 +1,6 @@
-package dev.alexengrig.plugin.maven.codecov.service;
+package dev.alexengrig.codecov.maven.plugin.service;
 
-import dev.alexengrig.plugin.maven.codecov.exception.FileDownloadException;
+import dev.alexengrig.codecov.maven.plugin.exception.FileDownloadException;
 
 import java.io.File;
 import java.io.FileOutputStream;

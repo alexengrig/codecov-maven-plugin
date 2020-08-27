@@ -1,10 +1,10 @@
-package dev.alexengrig.plugin.maven.codecov;
+package dev.alexengrig.codecov.maven.plugin;
 
-import dev.alexengrig.plugin.maven.codecov.exception.CreateScriptDirectoryException;
-import dev.alexengrig.plugin.maven.codecov.exception.NoScriptDirectoryException;
-import dev.alexengrig.plugin.maven.codecov.exception.ScriptDirectoryException;
-import dev.alexengrig.plugin.maven.codecov.service.CommandExecutor;
-import dev.alexengrig.plugin.maven.codecov.service.FileDownloader;
+import dev.alexengrig.codecov.maven.plugin.exception.CreateScriptDirectoryException;
+import dev.alexengrig.codecov.maven.plugin.exception.NoScriptDirectoryException;
+import dev.alexengrig.codecov.maven.plugin.exception.ScriptDirectoryException;
+import dev.alexengrig.codecov.maven.plugin.service.CommandExecutor;
+import dev.alexengrig.codecov.maven.plugin.service.FileDownloader;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;

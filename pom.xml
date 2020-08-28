@@ -26,8 +26,29 @@
     <packaging>maven-plugin</packaging>
 
     <name>Codecov Maven Plugin</name>
-    <description>Maven goal for work with Codecov</description>
+    <description>Maven goal for upload reports to Codecov</description>
     <url>https://github.com/alexengrig/codecov-maven-plugin</url>
+
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <id>alexengrig</id>
+            <roles>
+                <role>owner</role>
+                <role>architect</role>
+                <role>developer</role>
+            </roles>
+            <name>Grig Alex</name>
+            <email>alexengrigdev@gmail.com</email>
+        </developer>
+    </developers>
 
     <prerequisites>
         <maven>${maven.version}</maven>
@@ -198,4 +219,22 @@ Conflicting implementation is: dev.alexengrig.codecov.maven.plugin.HelpMojo'
             </build>
         </profile>
     </profiles>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
+
+    <scm>
+        <connection>scm:git:https://github.com/alexengrig/codecov-maven-plugin.git</connection>
+        <developerConnection>scm:git:https://github.com/alexengrig/codecov-maven-plugin.git</developerConnection>
+        <url>https://github.com/alexengrig/codecov-maven-plugin.git</url>
+        <tag>HEAD</tag>
+    </scm>
 </project>

@@ -1,5 +1,8 @@
 # codecov-maven-plugin
 
+[![travis-ci](https://travis-ci.com/alexengrig/codecov-maven-plugin.svg?branch=master)](https://travis-ci.com/alexengrig/codecov-maven-plugin)
+[![codecov](https://codecov.io/gh/alexengrig/codecov-maven-plugin/branch/master/graph/badge.svg)](https://codecov.io/gh/alexengrig/codecov-maven-plugin)
+
 Upload reports to [Codecov](https://codecov.io/) based on [bash script](https://github.com/codecov/codecov-bash).
 
 ## Get Started
@@ -36,7 +39,7 @@ Add this code (using JaCoCo Plugin for generate report) to your `pom.xml`:
             <version>1.0</version>
             <executions>
                 <execution>
-                    <id>coverage</id>
+                    <id>upload</id>
                     <phase>test</phase>
                     <goals>
                         <goal>upload</goal>

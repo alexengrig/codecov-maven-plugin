@@ -59,7 +59,7 @@
                 <version>1.0-SNAPSHOT</version>
                 <executions>
                     <execution>
-                        <id>coverage</id>
+                        <id>upload</id>
                         <phase>test</phase>
                         <goals>
                             <goal>upload</goal>

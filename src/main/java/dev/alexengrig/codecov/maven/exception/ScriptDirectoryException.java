@@ -1,4 +1,4 @@
-package dev.alexengrig.codecov.maven.plugin.exception;
+package dev.alexengrig.codecov.maven.exception;
 
 import org.apache.maven.plugin.MojoFailureException;
 

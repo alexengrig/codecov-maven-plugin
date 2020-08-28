@@ -1,6 +1,6 @@
-package dev.alexengrig.codecov.maven.plugin.service;
+package dev.alexengrig.codecov.maven.service;
 
-import dev.alexengrig.codecov.maven.plugin.exception.CommandExecuteException;
+import dev.alexengrig.codecov.maven.exception.CommandExecuteException;
 
 import java.io.BufferedReader;
 import java.io.IOException;

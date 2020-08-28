@@ -17,8 +17,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 
-@Mojo(name = "coverage", defaultPhase = LifecyclePhase.TEST)
-public class CodecovCoverageMojo extends AbstractMojo {
+@Mojo(name = "upload", defaultPhase = LifecyclePhase.TEST)
+public class CodecovUploadMojo extends AbstractMojo {
     private final FileDownloader fileDownloader = new FileDownloader();
     private final CommandExecutor commandExecutor = new CommandExecutor(getLog()::info);
 

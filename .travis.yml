@@ -2,6 +2,5 @@ language: java
 jdk:
   - openjdk8
 install:
-  - mvn package
   - cd demo
-  - mvn install:install-file -Dfile=../target/codecov-maven-plugin-1.0-SNAPSHOT.jar -DgroupId=dev.alexengrig -DartifactId=codecov-maven-plugin -Dpackaging=maven-plugin -Dversion=1.0-SNAPSHOT
+#  - mvn install:install-file -Dfile=../target/codecov-maven-plugin-1.0-SNAPSHOT.jar -DgroupId=dev.alexengrig -DartifactId=codecov-maven-plugin -Dpackaging=maven-plugin -Dversion=1.0-SNAPSHOT

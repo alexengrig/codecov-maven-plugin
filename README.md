@@ -1,4 +1,4 @@
-# codecov-maven-plugin
+# codecov-maven-plugin [![Maven Central](https://img.shields.io/maven-central/v/dev.alexengrig/codecov-maven-plugin/1.0)](https://search.maven.org/artifact/dev.alexengrig/codecov-maven-plugin/1.0/maven-plugin) [![JavaDoc](https://javadoc.io/badge2/dev.alexengrig/codecov-maven-plugin/javadoc.svg)](https://javadoc.io/doc/dev.alexengrig/codecov-maven-plugin) [![GitHub](https://img.shields.io/github/license/alexengrig/codecov-maven-plugin)](LICENSE)
 
 [![travis-ci](https://travis-ci.com/alexengrig/codecov-maven-plugin.svg?branch=master)](https://travis-ci.com/alexengrig/codecov-maven-plugin)
 [![codecov](https://codecov.io/gh/alexengrig/codecov-maven-plugin/branch/master/graph/badge.svg)](https://codecov.io/gh/alexengrig/codecov-maven-plugin)

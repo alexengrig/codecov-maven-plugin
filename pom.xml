@@ -21,7 +21,7 @@
 
     <groupId>dev.alexengrig</groupId>
     <artifactId>codecov-maven-plugin</artifactId>
-    <version>1.0</version>
+    <version>1.1-SNAPSHOT</version>
     <packaging>maven-plugin</packaging>
 
     <name>Codecov Maven Plugin</name>

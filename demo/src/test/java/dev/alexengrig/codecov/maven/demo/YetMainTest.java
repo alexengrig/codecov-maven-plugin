@@ -23,6 +23,6 @@ import static org.junit.Assert.assertEquals;
 public class YetMainTest {
     @Test
     public void should_return_0() {
-        assertEquals(1, new YetMain().return0());
+        assertEquals(0, new YetMain().return0());
     }
 }

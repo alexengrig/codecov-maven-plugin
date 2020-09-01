@@ -38,22 +38,22 @@ public class CodecovUploadMojo extends AbstractMojo {
     private final FileDownloader fileDownloader = new FileDownloader();
     private final CommandExecutor commandExecutor = new CommandExecutor(this::info);
 
-    @Parameter(name = "scriptUrl", defaultValue = "https://codecov.io/bash")
-    private URL scriptUrl;
-    @Parameter(name = "scriptDirectory", alias = "scriptDir", defaultValue = "./")
-    private File scriptDirectory;
-    @Parameter(name = "createScriptDirectoryIfNotExists", alias = "createScriptDirIfNotExists", defaultValue = "true")
-    private boolean createScriptDirectoryIfNotExists;
-    @Parameter(name = "scriptFilename", alias = "scriptName", defaultValue = "codecov.sh")
-    private String scriptFilename;
+    @Parameter(property = "url", defaultValue = "https://codecov.io/bash")
+    private URL url;
+    @Parameter(property = "directory", defaultValue = "./")
+    private File directory;
+    @Parameter(property = "createDirectoryIfNotExists", defaultValue = "true")
+    private boolean createDirectoryIfNotExists;
+    @Parameter(property = "filename", defaultValue = "codecov.sh")
+    private String filename;
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
         info("Started.");
         requireScriptDirectoryExists();
-        File file = new File(scriptDirectory, scriptFilename);
-        info("Downloading file from %s to '%s'.", scriptUrl, file);
-        fileDownloader.download(scriptUrl, file);
+        File file = new File(directory, filename);
+        info("Downloading file from %s to '%s'.", url, file);
+        fileDownloader.download(url, file);
         info("Downloaded file: '%s'.", file);
         info("Executing file '%s'.", file);
         String command = "bash " + file;
@@ -63,13 +63,13 @@ public class CodecovUploadMojo extends AbstractMojo {
     }
 
     private void requireScriptDirectoryExists() throws ScriptDirectoryException {
-        if (!scriptDirectory.exists() && !createScriptDirectoryIfNotExists) {
-            throw new NoScriptDirectoryException(scriptDirectory);
+        if (!directory.exists() && !createDirectoryIfNotExists) {
+            throw new NoScriptDirectoryException(directory);
         }
         try {
-            Files.createDirectories(scriptDirectory.toPath());
+            Files.createDirectories(directory.toPath());
         } catch (IOException e) {
-            throw new CreateScriptDirectoryException(scriptDirectory, e);
+            throw new CreateScriptDirectoryException(directory, e);
         }
     }
 

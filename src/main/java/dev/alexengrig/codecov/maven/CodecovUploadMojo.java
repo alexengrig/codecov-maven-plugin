@@ -19,6 +19,7 @@ package dev.alexengrig.codecov.maven;
 import dev.alexengrig.codecov.maven.exception.CreateScriptDirectoryException;
 import dev.alexengrig.codecov.maven.exception.NoScriptDirectoryException;
 import dev.alexengrig.codecov.maven.exception.ScriptDirectoryException;
+import dev.alexengrig.codecov.maven.exception.ScriptFailureException;
 import dev.alexengrig.codecov.maven.service.CommandExecutor;
 import dev.alexengrig.codecov.maven.service.FileDownloader;
 import org.apache.maven.plugin.AbstractMojo;
@@ -64,6 +65,9 @@ public class CodecovUploadMojo extends AbstractMojo {
         info("Executing file '%s'.", file);
         String command = "bash " + file;
         int exitCode = commandExecutor.execute(command);
+        if (exitCode != 0) {
+            throw new ScriptFailureException(file, exitCode);
+        }
         info("Executed file '%s' with exit code: %d.", file, exitCode);
         info("Finished.");
     }

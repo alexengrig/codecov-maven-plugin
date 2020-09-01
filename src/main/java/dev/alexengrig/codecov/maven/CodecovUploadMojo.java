@@ -38,6 +38,8 @@ public class CodecovUploadMojo extends AbstractMojo {
     private final FileDownloader fileDownloader = new FileDownloader();
     private final CommandExecutor commandExecutor = new CommandExecutor(this::info);
 
+    @Parameter(property = "skip", defaultValue = "false")
+    private boolean skip;
     @Parameter(property = "url", defaultValue = "https://codecov.io/bash")
     private URL url;
     @Parameter(property = "directory", defaultValue = "./")
@@ -49,6 +51,10 @@ public class CodecovUploadMojo extends AbstractMojo {
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
+        if (skip) {
+            info("Skip is enable.");
+            return;
+        }
         info("Started.");
         requireScriptDirectoryExists();
         File file = new File(directory, filename);

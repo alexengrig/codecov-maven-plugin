@@ -49,6 +49,8 @@ public class CodecovUploadMojo extends AbstractMojo {
     private boolean createDirectoryIfNotExists;
     @Parameter(property = "filename", defaultValue = "codecov.sh")
     private String filename;
+    @Parameter(property = "shell", defaultValue = "bash")
+    private String shell;
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
@@ -63,7 +65,7 @@ public class CodecovUploadMojo extends AbstractMojo {
         fileDownloader.download(url, file);
         info("Downloaded file: '%s'.", file);
         info("Executing file '%s'.", file);
-        String command = "bash " + file;
+        String command = shell + " " + file;
         int exitCode = commandExecutor.execute(command);
         if (exitCode != 0) {
             throw new ScriptFailureException(file, exitCode);

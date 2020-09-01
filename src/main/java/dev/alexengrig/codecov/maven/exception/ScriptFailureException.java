@@ -18,10 +18,8 @@ package dev.alexengrig.codecov.maven.exception;
 
 import org.apache.maven.plugin.MojoFailureException;
 
-import java.io.File;
-
 public class ScriptFailureException extends MojoFailureException {
-    public ScriptFailureException(File file, int exitCode) {
-        super(String.format("Executed file '%s' with exit code: %d", file, exitCode));
+    public ScriptFailureException(String command, int exitCode) {
+        super(String.format("Executed command '%s' with exit code: %d", command, exitCode));
     }
 }

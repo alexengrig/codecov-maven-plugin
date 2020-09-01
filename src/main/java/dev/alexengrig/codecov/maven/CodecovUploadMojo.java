@@ -64,13 +64,13 @@ public class CodecovUploadMojo extends AbstractMojo {
         info("Downloading file from %s to '%s'.", url, file);
         fileDownloader.download(url, file);
         info("Downloaded file: '%s'.", file);
-        info("Executing file '%s'.", file);
         String command = shell + " " + file;
+        info("Executing command: '%s'.", command);
         int exitCode = commandExecutor.execute(command);
         if (exitCode != 0) {
-            throw new ScriptFailureException(file, exitCode);
+            throw new ScriptFailureException(command, exitCode);
         }
-        info("Executed file '%s' with exit code: %d.", file, exitCode);
+        info("Executed command '%s' with exit code: %d.", command, exitCode);
         info("Finished.");
     }
 

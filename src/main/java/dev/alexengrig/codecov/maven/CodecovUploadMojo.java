@@ -36,7 +36,7 @@ import java.nio.file.Files;
 @Mojo(name = "upload", defaultPhase = LifecyclePhase.TEST)
 public class CodecovUploadMojo extends AbstractMojo {
     private final FileDownloader fileDownloader = new FileDownloader();
-    private final CommandExecutor commandExecutor = new CommandExecutor(getLog()::info);
+    private final CommandExecutor commandExecutor = new CommandExecutor(this::info);
 
     @Parameter(name = "scriptUrl", defaultValue = "https://codecov.io/bash")
     private URL scriptUrl;
@@ -49,17 +49,17 @@ public class CodecovUploadMojo extends AbstractMojo {
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
-        getLog().info("Started.");
+        info("Started.");
         requireScriptDirectoryExists();
         File file = new File(scriptDirectory, scriptFilename);
-        getLog().info(String.format("Downloading file from %s to '%s'.", scriptUrl, file));
+        info("Downloading file from %s to '%s'.", scriptUrl, file);
         fileDownloader.download(scriptUrl, file);
-        getLog().info(String.format("Downloaded file: '%s'.", file));
-        getLog().info(String.format("Executing file '%s'.", file));
-        String command = String.format("bash %s", file);
+        info("Downloaded file: '%s'.", file);
+        info("Executing file '%s'.", file);
+        String command = "bash " + file;
         int exitCode = commandExecutor.execute(command);
-        getLog().info(String.format("Executed file '%s' with exit code: %d.", file, exitCode));
-        getLog().info("Finished.");
+        info("Executed file '%s' with exit code: %d.", file, exitCode);
+        info("Finished.");
     }
 
     private void requireScriptDirectoryExists() throws ScriptDirectoryException {
@@ -71,5 +71,13 @@ public class CodecovUploadMojo extends AbstractMojo {
         } catch (IOException e) {
             throw new CreateScriptDirectoryException(scriptDirectory, e);
         }
+    }
+
+    protected void info(String message) {
+        getLog().info(message);
+    }
+
+    protected void info(String format, Object... args) {
+        getLog().info(String.format(format, args));
     }
 }

@@ -16,9 +16,8 @@
 
 package dev.alexengrig.codecov.maven;
 
-import dev.alexengrig.codecov.maven.exception.CreateScriptDirectoryException;
-import dev.alexengrig.codecov.maven.exception.NoScriptDirectoryException;
-import dev.alexengrig.codecov.maven.exception.ScriptDirectoryException;
+import dev.alexengrig.codecov.maven.domain.ScriptArguments;
+import dev.alexengrig.codecov.maven.exception.*;
 import dev.alexengrig.codecov.maven.service.CommandExecutor;
 import dev.alexengrig.codecov.maven.service.FileDownloader;
 import org.apache.maven.plugin.AbstractMojo;
@@ -36,40 +35,76 @@ import java.nio.file.Files;
 @Mojo(name = "upload", defaultPhase = LifecyclePhase.TEST)
 public class CodecovUploadMojo extends AbstractMojo {
     private final FileDownloader fileDownloader = new FileDownloader();
-    private final CommandExecutor commandExecutor = new CommandExecutor(getLog()::info);
+    private final CommandExecutor commandExecutor = new CommandExecutor(this::info);
 
-    @Parameter(name = "scriptUrl", defaultValue = "https://codecov.io/bash")
-    private URL scriptUrl;
-    @Parameter(name = "scriptDirectory", alias = "scriptDir", defaultValue = "./")
-    private File scriptDirectory;
-    @Parameter(name = "createScriptDirectoryIfNotExists", alias = "createScriptDirIfNotExists", defaultValue = "true")
-    private boolean createScriptDirectoryIfNotExists;
-    @Parameter(name = "scriptFilename", alias = "scriptName", defaultValue = "codecov.sh")
-    private String scriptFilename;
+    @Parameter(property = "skip", defaultValue = "false")
+    private boolean skip;
+    @Parameter(property = "url", defaultValue = "https://codecov.io/bash")
+    private URL url;
+    @Parameter(property = "directory", defaultValue = "./")
+    private File directory;
+    @Parameter(property = "createDirectoryIfNotExists", defaultValue = "true")
+    private boolean createDirectoryIfNotExists;
+    @Parameter(property = "filename", defaultValue = "codecov.sh")
+    private String filename;
+    @Parameter(property = "shell", defaultValue = "bash")
+    private String shell;
+    @Parameter(property = "scriptArguments")
+    private ScriptArguments scriptArguments;
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
-        getLog().info("Started.");
+        if (skip) {
+            info("Skip is enable.");
+            return;
+        }
+        info("Started.");
         requireScriptDirectoryExists();
-        File file = new File(scriptDirectory, scriptFilename);
-        getLog().info(String.format("Downloading file from %s to '%s'.", scriptUrl, file));
-        fileDownloader.download(scriptUrl, file);
-        getLog().info(String.format("Downloaded file: '%s'.", file));
-        getLog().info(String.format("Executing file '%s'.", file));
-        String command = String.format("bash %s", file);
-        int exitCode = commandExecutor.execute(command);
-        getLog().info(String.format("Executed file '%s' with exit code: %d.", file, exitCode));
-        getLog().info("Finished.");
+        runScript();
+        info("Finished.");
     }
 
     private void requireScriptDirectoryExists() throws ScriptDirectoryException {
-        if (!scriptDirectory.exists() && !createScriptDirectoryIfNotExists) {
-            throw new NoScriptDirectoryException(scriptDirectory);
+        if (!directory.exists() && !createDirectoryIfNotExists) {
+            throw new NoScriptDirectoryException(directory);
         }
         try {
-            Files.createDirectories(scriptDirectory.toPath());
+            Files.createDirectories(directory.toPath());
         } catch (IOException e) {
-            throw new CreateScriptDirectoryException(scriptDirectory, e);
+            throw new CreateScriptDirectoryException(directory, e);
         }
+    }
+
+    private void runScript() throws FileDownloadException, CommandExecuteException, ScriptFailureException {
+        String command = (shell + " " + getFile() + " " + scriptArguments.inline()).trim();
+        info("Executing command: '%s'.", command);
+        int exitCode = executeCommand(command);
+        info("Executed command '%s' with exit code: %d.", command, exitCode);
+    }
+
+    private File getFile() throws FileDownloadException {
+        File file = new File(directory, filename);
+        if (!file.exists()) {
+            info("Downloading file from %s to '%s'.", url, file);
+            fileDownloader.download(url, file);
+            info("Downloaded file: '%s'.", file);
+        }
+        return file;
+    }
+
+    private int executeCommand(String command) throws CommandExecuteException, ScriptFailureException {
+        int exitCode = commandExecutor.execute(command);
+        if (exitCode != 0) {
+            throw new ScriptFailureException(command, exitCode);
+        }
+        return exitCode;
+    }
+
+    protected void info(String message) {
+        getLog().info(message);
+    }
+
+    protected void info(String format, Object... args) {
+        getLog().info(String.format(format, args));
     }
 }
